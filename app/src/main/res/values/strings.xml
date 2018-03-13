@@ -380,6 +380,7 @@
     <string name="language">Language</string>
     <string name="choose_language">Choose your language</string>
     <string name="notification">Notifications</string>
+    <string name="reason_of_withdrawal">Reason of Withdrawal</string>
 
     <string-array name="faq_qs">
         <item>How do I apply for new loan account?</item>
