@@ -92,11 +92,15 @@ public class LoanAccountWithdrawFragment extends BaseFragment implements LoanAcc
      */
     @OnClick(R.id.btn_withdraw_loan)
     public void onLoanWithdraw() {
-        LoanWithdraw loanWithdraw = new LoanWithdraw();
-        loanWithdraw.setNote(etWithdrawReason.getText().toString());
-        loanWithdraw.setWithdrawnOnDate(DateHelper
-                .getDateAsStringFromLong(System.currentTimeMillis()));
-        loanAccountWithdrawPresenter.withdrawLoanAccount(loanAccount.getId(), loanWithdraw);
+
+        if (isFieldsValid()) {
+
+            LoanWithdraw loanWithdraw = new LoanWithdraw();
+            loanWithdraw.setNote(etWithdrawReason.getText().toString().trim());
+            loanWithdraw.setWithdrawnOnDate(DateHelper
+                    .getDateAsStringFromLong(System.currentTimeMillis()));
+            loanAccountWithdrawPresenter.withdrawLoanAccount(loanAccount.getId(), loanWithdraw);
+        }
     }
 
     /**
@@ -133,5 +137,16 @@ public class LoanAccountWithdrawFragment extends BaseFragment implements LoanAcc
         super.onDestroyView();
         hideProgress();
         loanAccountWithdrawPresenter.detachView();
+    }
+
+    public boolean isFieldsValid() {
+
+        if (etWithdrawReason.getText().toString().trim().length() == 0) {
+            Toaster.show(rootView, getResources().getString(R.string.error_validation_blank,
+                    getResources().getString(R.string.reason_of_withdrawal)));
+            return false;
+        }
+
+        return true;
     }
 }
