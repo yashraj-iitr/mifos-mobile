@@ -15,7 +15,7 @@ object Network {
      * @param context
      * @return
      */
-    private fun getNetworkInfo(context: Context): NetworkInfo {
+    private fun getNetworkInfo(context: Context): NetworkInfo? {
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         return cm.activeNetworkInfo
     }
@@ -29,7 +29,7 @@ object Network {
     @kotlin.jvm.JvmStatic
     fun isConnected(context: Context?): Boolean {
         val info = getNetworkInfo(context!!)
-        return info.isConnected
+        return info?.isConnected ?: false
     }
 
     /**
@@ -41,7 +41,7 @@ object Network {
      */
     fun isConnectedWifi(context: Context): Boolean {
         val info = getNetworkInfo(context)
-        return info.isConnected && info.type == ConnectivityManager.TYPE_WIFI
+        return info?.isConnected?:false && info?.type == ConnectivityManager.TYPE_WIFI
     }
 
     /**
@@ -53,7 +53,7 @@ object Network {
      */
     fun isConnectedMobile(context: Context): Boolean {
         val info = getNetworkInfo(context)
-        return info.isConnected && info.type == ConnectivityManager.TYPE_MOBILE
+        return info?.isConnected?:false && info?.type == ConnectivityManager.TYPE_MOBILE
     }
 
     /**
@@ -64,7 +64,7 @@ object Network {
      */
     fun isConnectedFast(context: Context): Boolean {
         val info = getNetworkInfo(context)
-        return info.isConnected && isConnectionFast(info.type, info.subtype)
+        return info?.isConnected?:false && isConnectionFast(info!!.type, info.subtype)
     }
 
     /**
